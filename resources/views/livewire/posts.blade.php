@@ -3,13 +3,15 @@
         Posts
     </div>
 
+    {{ $sqlQuery }}
     <div class="mt-6">
-        <div class="flex justify-between">
-            <div></div>
+        
+        <div class="flex justify-between mb-4">
+            <div>
+                <input wire:model.debounce.500ms="q" type="search" class="bg-purple-white shadow rounded border-0 p-0 mb-8" placeholder="Zoek...">
+            </div>
             <div class="mr-2">  
                 <input type="checkbox" class="mr-2 leading-tight" wire:model="active" /> Alleen actief
-
-        
             </div>
         </div>
         <table class="table-auto w-full">
