@@ -19,26 +19,35 @@
                 <tr>
                     <th class="px-4 py-2">
                         <div class="flex items-center">
-                            Id
+                            <button wire:click="sortBy('id')">Id</button>
+                            <x-sort-icon sortField="id" :sortBy="$sortBy" :sortAsc="$sortAsc" />
                         </div>
                         <th class="px-4 py-2">
                             <div class="flex items-center">
-                                Titel
+                                <button wire:click="sortBy('title')">Title</button>
+                                <x-sort-icon sortField="title" :sortBy="$sortBy" :sortAsc="$sortAsc" />
                             </div>
                         </th>
                         <th class="px-4 py-2">
                             <div class="flex items-center">
-                                Provincie
+                                <button wire:click="sortBy('province')">Provincie</button>
+                                <x-sort-icon sortField="province" :sortBy="$sortBy" :sortAsc="$sortAsc" />
                             </div>
                         </th>
+
+                        @if(!$active)
+                            <th class="px-4 py-2">
+                                <div class="flex items-center">
+                                    <button wire:click="sortBy('status')">Status</button>
+                                    <x-sort-icon sortField="status" :sortBy="$sortBy" :sortAsc="$sortAsc" />
+                                </div>
+                            </th>
+                        @endif
+
                         <th class="px-4 py-2">
                             <div class="flex items-center">
-                                Status
-                            </div>
-                        </th>
-                        <th class="px-4 py-2">
-                            <div class="flex items-center">
-                                Type
+                                <button wire:click="sortBy('type')">Title</button>
+                                <x-sort-icon sortField="type" :sortBy="$sortBy" :sortAsc="$sortAsc" />
                             </div>
                         </th>
                         <th class="px-4 py-2">
@@ -61,9 +70,11 @@
                         <td class="border px-4 py-2">
                             {{ $post->province }}
                         </td>
-                        <td class="border px-4 py-2">
-                            {{ $post->status ? 'Actief' : 'Niet actief' }}
-                        </td>
+                        @if(!$active)
+                            <td class="border px-4 py-2">
+                                {{ $post->status ? 'Actief' : 'Niet actief' }}
+                            </td>
+                        @endif
                         <td class="border px-4 py-2">
                             {{ $post->type }}
                         </td>

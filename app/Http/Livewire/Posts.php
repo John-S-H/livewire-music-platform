@@ -12,6 +12,15 @@ class Posts extends Component
 
     public $active;
     public $q;
+    public $sortBy = 'id';
+    public $sortAsc = true;
+
+    protected $queryString = [
+        'active' => ['except' => false],
+        'q' => ['except' => ''],
+        'sortBy' => ['except' => 'id'],
+        'sortAsc' => ['except' => true]
+    ];
 
     public function render()
     {
@@ -31,7 +40,7 @@ class Posts extends Component
         }
 
         // Use orderBy() to sort the results if needed
-        $query->orderBy('created_at', 'desc');
+        $query->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC');
 
         // Get the SQL query before pagination
         $sqlQuery = $query->toSql();
@@ -53,6 +62,16 @@ class Posts extends Component
     public function updatingQ()
     {
         $this->resetPage();
+    }
+
+    public function sortBy($field) 
+    {
+
+        if($field === $this->sortBy) {
+            $this->sortAsc = !$this->sortAsc;
+        }
+
+        $this->sortBy = $field;
     }
 }
 
