@@ -46,7 +46,7 @@
 
                         <th class="px-4 py-2">
                             <div class="flex items-center">
-                                <button wire:click="sortBy('type')">Title</button>
+                                <button wire:click="sortBy('type')">Type</button>
                                 <x-sort-icon sortField="type" :sortBy="$sortBy" :sortAsc="$sortAsc" />
                             </div>
                         </th>
@@ -79,7 +79,9 @@
                             {{ $post->type }}
                         </td>
                         <td class="border px-4 py-2">
-                            Aanpassen verwijderen
+                            <x-danger-button wire:click="confirmPostDeletion({{ $post->id }})" wire:loading.attr="disabled">
+                                {{ __('Verwijder') }}
+                            </x-danger-button>
                         </td>
                     </tr>
                 @endforeach
@@ -90,5 +92,25 @@
     <div class="mt-4">
         {{ $posts->links() }}
     </div>
+
+    <x-dialog-modal wire:model="confirmingPostDeletion">
+        <x-slot name="title">
+            {{ __('Verwijder bericht') }}
+        </x-slot>
+
+        <x-slot name="content">
+            {{ __('Weet je zeker dat je dit bericht wilt verwijderen?') }}
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$set('confirmingPostDeletion', false)" wire:loading.attr="disabled">
+                {{ __('Annuleren') }}
+            </x-secondary-button>
+
+            <x-danger-button class="ml-3" wire:click="deletePost({{ $confirmingPostDeletion }})" wire:loading.attr="disabled">
+                {{ __('Verwijder') }}
+            </x-danger-button>
+        </x-slot>
+    </x-dialog-modal>
 </div>
  

@@ -15,6 +15,8 @@ class Posts extends Component
     public $sortBy = 'id';
     public $sortAsc = true;
 
+    public $confirmingPostDeletion = false;
+
     protected $queryString = [
         'active' => ['except' => false],
         'q' => ['except' => ''],
@@ -72,6 +74,23 @@ class Posts extends Component
         }
 
         $this->sortBy = $field;
+    }
+
+    public function confirmPostDeletion($postId)
+    {
+        $this->confirmingPostDeletion = $postId;
+    }
+    
+    public function deletePost()
+    {
+
+        $post = Post::find($this->confirmingPostDeletion);
+        if ($post) {
+            $post->delete();
+        }
+    
+        // After successful deletion, close the modal
+        $this->confirmingPostDeletion = null;
     }
 }
 
