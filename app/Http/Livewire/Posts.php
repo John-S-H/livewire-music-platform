@@ -14,14 +14,22 @@ class Posts extends Component
     public $q;
     public $sortBy = 'id';
     public $sortAsc = true;
+    public $post;
 
     public $confirmingPostDeletion = false;
+    public $confirmingPostAdd = false;
 
     protected $queryString = [
         'active' => ['except' => false],
         'q' => ['except' => ''],
         'sortBy' => ['except' => 'id'],
         'sortAsc' => ['except' => true]
+    ];
+
+    protected $rules = [
+        'post.title' => 'required|string|min:4',
+        'post.description' => 'required|string|min:4',
+        'post.status' => 'boolean'
     ];
 
     public function render()
@@ -91,6 +99,37 @@ class Posts extends Component
     
         // After successful deletion, close the modal
         $this->confirmingPostDeletion = null;
+    }
+
+    public function confirmPostAdd()
+    {
+        $this->reset();
+        $this->confirmingPostAdd = true;
+    }
+
+    public function confirmPostEdit(Post $post)
+    {
+        $this->post = $post;
+        $this->confirmingPostAdd = true;
+    }
+    
+
+    public function savePost()
+    {
+        $this->validate();
+
+        // Check to see if the item id isset if so edit existing else create one
+        if(isset($this->post->id)) {
+            $this->post->save();
+        } else {
+            auth()->user()->posts()->create([
+                "title" => $this->post['title'],
+                "description" => $this->post['description'],
+                "status" => $this->post['status'] ?? 0,
+            ]);
+        }
+
+        $this->confirmingPostAdd = false;
     }
 }
 

@@ -1,9 +1,18 @@
 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
-    <div class="mt-8 text-2xl">
-        Posts
+
+
+    <div class="mt-8 text-2xl flex justify-between">
+        <div>Posts</div>
+        <div class="mr-2">
+            <x-button wire:click="confirmPostAdd" class="bg-blue-600 hover:bg-blue-800">
+                {{ __('Nieuwe post') }}
+            </x-button>
+        </div>
     </div>
 
-    {{ $sqlQuery }}
+    {{-- User for checking the query --}}
+    {{-- {{ $sqlQuery }} --}}
+
     <div class="mt-6">
         
         <div class="flex justify-between mb-4">
@@ -79,6 +88,12 @@
                             {{ $post->type }}
                         </td>
                         <td class="border px-4 py-2">
+
+                            <x-button wire:click="confirmPostEdit({{ $post->id }})" class="bg-orange-600 hover:bg-orange-800">
+                                {{ __('Aanpassen') }}
+                            </x-button>
+
+
                             <x-danger-button wire:click="confirmPostDeletion({{ $post->id }})" wire:loading.attr="disabled">
                                 {{ __('Verwijder') }}
                             </x-danger-button>
@@ -109,6 +124,45 @@
 
             <x-danger-button class="ml-3" wire:click="deletePost({{ $confirmingPostDeletion }})" wire:loading.attr="disabled">
                 {{ __('Verwijder') }}
+            </x-danger-button>
+        </x-slot>
+    </x-dialog-modal>
+
+
+    <x-dialog-modal wire:model="confirmingPostAdd">
+        <x-slot name="title">
+           {{ isset($this->post->id) ? 'Post aanpassen' : 'Post toevoegen'}}
+        </x-slot>
+
+        <x-slot name="content">
+            <div class="col-span-6 sm:col-span-4 mb-4">
+                <x-label for="title" value="{{ __('Title') }}" />
+                <x-input id="title" type="text" class="mt-1 block w-full" wire:model.defer="post.title" required autocomplete="title" />
+                <x-input-error for="post.title" class="mt-2" />
+            </div>
+
+            <div class="col-span-6 sm:col-span-4 mb-4">
+                <x-label for="description" value="{{ __('Omschrijving') }}" />
+                <x-input id="description" type="text" class="mt-1 block w-full" wire:model.defer="post.description" required autocomplete="description" />
+                <x-input-error for="post.description" class="mt-2" />
+            </div>
+
+            <div class="col-span-6 sm:col-span-4">
+                <label class="flex items-center">
+                    <input type="checkbox" wire:model.defer="post.status" class="form-checkbox">
+                    <span class="ml-2 text-sm text-gray-600">Actief</span>
+                </label>
+            </div>
+
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-secondary-button wire:click="$set('confirmingPostAdd', false)" wire:loading.attr="disabled">
+                {{ __('Annuleren') }}
+            </x-secondary-button>
+
+            <x-danger-button class="ml-3" wire:click="savePost()" wire:loading.attr="disabled">
+                {{ __('Opslaan') }}
             </x-danger-button>
         </x-slot>
     </x-dialog-modal>
