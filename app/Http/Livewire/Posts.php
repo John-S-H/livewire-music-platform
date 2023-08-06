@@ -99,6 +99,7 @@ class Posts extends Component
     
         // After successful deletion, close the modal
         $this->confirmingPostDeletion = null;
+        session()->flash('message', 'Post is verwijderd');
     }
 
     public function confirmPostAdd()
@@ -121,12 +122,14 @@ class Posts extends Component
         // Check to see if the item id isset if so edit existing else create one
         if(isset($this->post->id)) {
             $this->post->save();
+            session()->flash('message', 'Post is aangepast');
         } else {
             auth()->user()->posts()->create([
                 "title" => $this->post['title'],
                 "description" => $this->post['description'],
                 "status" => $this->post['status'] ?? 0,
             ]);
+            session()->flash('message', 'Post is opgeslagen');
         }
 
         $this->confirmingPostAdd = false;
