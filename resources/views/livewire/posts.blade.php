@@ -97,11 +97,9 @@
                             {{ $post->type }}
                         </td>
                         <td class="border px-4 py-2">
-
                             <x-button wire:click="confirmPostEdit({{ $post->id }})" class="bg-orange-600 hover:bg-orange-800">
                                 {{ __('Aanpassen') }}
                             </x-button>
-
 
                             <x-danger-button wire:click="confirmPostDeletion({{ $post->id }})" wire:loading.attr="disabled">
                                 {{ __('Verwijder') }}
