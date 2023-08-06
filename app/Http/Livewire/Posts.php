@@ -15,6 +15,8 @@ class Posts extends Component
     public $sortBy = 'id';
     public $sortAsc = true;
     public $post;
+    public $selectedProvince;
+    public $selectedType; 
 
     public $confirmingPostDeletion = false;
     public $confirmingPostAdd = false;
@@ -29,7 +31,23 @@ class Posts extends Component
     protected $rules = [
         'post.title' => 'required|string|min:4',
         'post.description' => 'required|string|min:4',
+        'post.type' => 'required|string|min:4',
+        'post.province' => 'required|string|min:4',
         'post.status' => 'boolean'
+    ];
+
+    public $provinces = [
+        'Groningen', 'Friesland', 'Drenthe', 'Overijssel', 'Gelderland',
+        'Flevoland', 'Utrecht', 'Noord-Holland', 'Zuid-Holland',
+        'Zeeland', 'Noord-Brabant', 'Limburg'
+    ];
+
+    public $types = [
+        'Bassist', 'Blokfluitist', 'Cellist', 'Componist', 'Rapper',
+        'Drummer', 'Fluitist', 'Gitarist', 'Harpist', 'Hoboïst',
+        'Hoornist', 'Klavecinist', 'Klarinettist', 'Organist',
+        'Percussionist', 'Pianist', 'Saxofonist', 'Toetsenist',
+        'Trombonist', 'Trompettist', 'Tubaïst', 'Violist', 'Zanger',
     ];
 
     public function render()
@@ -49,6 +67,14 @@ class Posts extends Component
             });
         }
 
+        if ($this->selectedProvince) {
+            $query->where('province', $this->selectedProvince);
+        }
+
+        if ($this->selectedType) {
+            $query->where('type', $this->selectedType);
+        }
+
         // Use orderBy() to sort the results if needed
         $query->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC');
 
@@ -61,6 +87,8 @@ class Posts extends Component
         return view('livewire.posts', [
             'posts' => $posts,
             'sqlQuery' => $sqlQuery,
+            'provinces' => $this->provinces,
+            'types' => $this->types
         ]);
     }
 
@@ -114,7 +142,6 @@ class Posts extends Component
         $this->confirmingPostAdd = true;
     }
     
-
     public function savePost()
     {
         $this->validate();
@@ -127,6 +154,8 @@ class Posts extends Component
             auth()->user()->posts()->create([
                 "title" => $this->post['title'],
                 "description" => $this->post['description'],
+                "type" => $this->post['type'],
+                "province" => $this->post['province'],
                 "status" => $this->post['status'] ?? 0,
             ]);
             session()->flash('message', 'Post is opgeslagen');

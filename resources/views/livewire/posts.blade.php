@@ -27,6 +27,21 @@
         <div class="flex justify-between mb-4">
             <div>
                 <input wire:model.debounce.500ms="q" type="search" class="bg-purple-white shadow rounded border-0 p-0 mb-8" placeholder="Zoek...">
+
+                <select wire:model="selectedProvince" class="bg-white shadow rounded border-0 p-0 mb-8">
+                    <option value="">Selecteer provincie</option>
+                    @foreach ($provinces as $province)
+                        <option value="{{ $province }}">{{ $province }}</option>
+                    @endforeach
+                </select>
+            
+                <select wire:model="selectedType" class="bg-white shadow rounded border-0 p-0 mb-8">
+                    <option value="">Selecteer Type</option>
+                    @foreach ($types as $type)
+                        <option value="{{ strtolower($type) }}">{{ $type }}</option>
+                    @endforeach
+                </select>
+
             </div>
             <div class="mr-2">  
                 <input type="checkbox" class="mr-2 leading-tight" wire:model="active" /> Alleen actief
@@ -138,40 +153,91 @@
 
     <x-dialog-modal wire:model="confirmingPostAdd">
         <x-slot name="title">
-           {{ isset($this->post->id) ? 'Post aanpassen' : 'Post toevoegen'}}
+            {{ isset($this->post->id) ? 'Post aanpassen' : 'Post toevoegen'}}
         </x-slot>
-
+    
         <x-slot name="content">
             <div class="col-span-6 sm:col-span-4 mb-4">
                 <x-label for="title" value="{{ __('Title') }}" />
                 <x-input id="title" type="text" class="mt-1 block w-full" wire:model.defer="post.title" required autocomplete="title" />
                 <x-input-error for="post.title" class="mt-2" />
             </div>
-
+    
             <div class="col-span-6 sm:col-span-4 mb-4">
                 <x-label for="description" value="{{ __('Omschrijving') }}" />
                 <x-input id="description" type="text" class="mt-1 block w-full" wire:model.defer="post.description" required autocomplete="description" />
                 <x-input-error for="post.description" class="mt-2" />
             </div>
-
+    
+            <div class="col-span-6 sm:col-span-4 mb-4">
+                <x-label for="province" value="{{ __('Province') }}" />
+                <select id="province" wire:model.defer="post.province" class="mt-1 block w-full" required>
+                    <option value="" selected disabled>Select Province</option>
+                    <option value="Groningen">Groningen</option>
+                    <option value="Fryslân">Fryslân</option>
+                    <option value="Drenthe">Drenthe</option>
+                    <option value="Overijssel">Overijssel</option>
+                    <option value="Gelderland">Gelderland</option>
+                    <option value="Flevoland">Flevoland</option>
+                    <option value="Utrecht">Utrecht</option>
+                    <option value="Noord-Holland">Noord-Holland</option>
+                    <option value="Zuid-Holland">Zuid-Holland</option>
+                    <option value="Zeeland">Zeeland</option>
+                    <option value="Noord-Brabant">Noord-Brabant</option>
+                    <option value="Limburg">Limburg</option>
+                </select>
+                <x-input-error for="post.province" class="mt-2" />
+            </div>
+    
+            <div class="col-span-6 sm:col-span-4 mb-4">
+                <x-label for="type" value="{{ __('Type') }}" />
+                <select id="type" wire:model.defer="post.type" class="mt-1 block w-full" required>
+                    <option value="" selected disabled>Select Type</option>
+                    <option value="Bassist">Bassist</option>
+                    <option value="Blokfluitist">Blokfluitist</option>
+                    <option value="Cellist">Cellist</option>
+                    <option value="Componist">Componist</option>
+                    <option value="Rapper">Rapper</option>
+                    <option value="Drummer">Drummer</option>
+                    <option value="Fluitist">Fluitist</option>
+                    <option value="Gitarist">Gitarist</option>
+                    <option value="Harpist">Harpist</option>
+                    <option value="Hoboïst">Hoboïst</option>
+                    <option value="Hoornist">Hoornist</option>
+                    <option value="Klavecinist">Klavecinist</option>
+                    <option value="Klarinettist">Klarinettist</option>
+                    <option value="Organist">Organist</option>
+                    <option value="Percussionist">Percussionist</option>
+                    <option value="Pianist">Pianist</option>
+                    <option value="Saxofonist">Saxofonist</option>
+                    <option value="Toetsenist">Toetsenist</option>
+                    <option value="Trombonist">Trombonist</option>
+                    <option value="Trompettist">Trompettist</option>
+                    <option value="Tubaïst">Tubaïst</option>
+                    <option value="Violist">Violist</option>
+                    <option value="Zanger">Zanger</option>
+                </select>
+                <x-input-error for="post.type" class="mt-2" />
+            </div>
+    
             <div class="col-span-6 sm:col-span-4">
                 <label class="flex items-center">
                     <input type="checkbox" wire:model.defer="post.status" class="form-checkbox">
                     <span class="ml-2 text-sm text-gray-600">Actief</span>
                 </label>
             </div>
-
         </x-slot>
-
+    
         <x-slot name="footer">
             <x-secondary-button wire:click="$set('confirmingPostAdd', false)" wire:loading.attr="disabled">
                 {{ __('Annuleren') }}
             </x-secondary-button>
-
+    
             <x-danger-button class="ml-3" wire:click="savePost()" wire:loading.attr="disabled">
                 {{ __('Opslaan') }}
             </x-danger-button>
         </x-slot>
     </x-dialog-modal>
+    
 </div>
  

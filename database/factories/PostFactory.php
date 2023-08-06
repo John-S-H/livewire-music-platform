@@ -2,14 +2,10 @@
 
 namespace Database\Factories;
 
-
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
- */
 class PostFactory extends Factory
 {
     /**
@@ -19,11 +15,26 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $provinces = [
+            'Groningen', 'Friesland', 'Drenthe', 'Overijssel', 'Gelderland',
+            'Flevoland', 'Utrecht', 'Noord-Holland', 'Zuid-Holland',
+            'Zeeland', 'Noord-Brabant', 'Limburg'
+        ];
+
+        $types = [
+            'Bassist', 'Blokfluitist', 'Cellist', 'Componist', 'Rapper',
+            'Drummer', 'Fluitist', 'Gitarist', 'Harpist', 'Hoboïst',
+            'Hoornist', 'Klavecinist', 'Klarinettist', 'Organist',
+            'Percussionist', 'Pianist', 'Saxofonist', 'Toetsenist',
+            'Trombonist', 'Trompettist', 'Tubaïst', 'Violist', 'Zanger',
+        ];
+
         return [
             'user_id' => User::factory(),
             'title' => $this->faker->title(),
+            'type' => $this->faker->randomElement($types),
             'description' => $this->faker->paragraph(),
-            'province' => $this->faker->title(),
+            'province' => $this->faker->randomElement($provinces),
             'status' => $this->faker->boolean(),
         ];
     }
