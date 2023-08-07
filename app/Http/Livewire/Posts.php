@@ -17,7 +17,6 @@ class Posts extends Component
     public $post;
     public $selectedProvince;
     public $selectedType; 
-
     public $confirmingPostDeletion = false;
     public $confirmingPostAdd = false;
 
@@ -97,11 +96,24 @@ class Posts extends Component
         $this->resetPage();
     }
 
+       // If we are on another page and type in title go back to first page
     public function updatingQ()
     {
         $this->resetPage();
     }
-
+    
+       // If we are on another page and select another type show the results
+    public function updatingSelectedType()
+    {
+        $this->resetPage();
+    }
+    
+   // If we are on another page and select another province show the results
+    public function updatingSelectedProvince()
+    {
+        $this->resetPage();
+    }
+    
     public function sortBy($field) 
     {
 

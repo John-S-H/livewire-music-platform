@@ -20,6 +20,10 @@
                         {{ __('Posts') }}
                     </x-nav-link>
 
+                    <x-nav-link href="/user/{{ Auth::user()->id }}" >
+                        {{ __('My profile') }}
+                    </x-nav-link>
+                
                 </div>
             </div>
 
@@ -81,9 +85,14 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                            <span class="inline-flex rounded-md">
+                                <span>
+                                    {{ Auth::user()->name }}
+                                </span>
                                 <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                                     <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                                 </button>
+                            </span>
                             @else
                                 <span class="inline-flex rounded-md">
                                     <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
