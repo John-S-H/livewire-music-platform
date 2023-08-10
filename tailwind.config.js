@@ -1,9 +1,8 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
-import typography from '@tailwindcss/typography';
+const defaultTheme = require('tailwindcss/defaultTheme');
+const forms = require('@tailwindcss/forms');
+const typography = require('@tailwindcss/typography');
 
-/** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './vendor/laravel/jetstream/**/*.blade.php',
@@ -19,5 +18,16 @@ export default {
         },
     },
 
-    plugins: [forms, typography],
+    plugins: [forms, typography, require("daisyui")],
+
+    daisyui: {
+        themes: false,
+        darkTheme: "light",
+        base: true,
+        styled: true,
+        utils: true,
+        rtl: false,
+        prefix: "",
+        logs: true,
+    },
 };

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\Post;
 use Livewire\WithPagination;
@@ -13,7 +14,7 @@ class Posts extends Component
     public $active;
     public $q;
     public $sortBy = 'id';
-    public $sortAsc = true;
+    public $sortAsc = false;
     public $post;
     public $selectedProvince;
     public $selectedType; 
@@ -124,6 +125,16 @@ class Posts extends Component
         $this->sortBy = $field;
     }
 
+    public function checkOwner($postUserId)
+    {
+        if($postUserId === Auth::user()->id)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    
     public function confirmPostDeletion($postId)
     {
         $this->confirmingPostDeletion = $postId;
@@ -131,15 +142,15 @@ class Posts extends Component
     
     public function deletePost()
     {
-
         $post = Post::find($this->confirmingPostDeletion);
-        if ($post) {
+
+        if ($post && $this->checkOwner($post->user_id)) {
             $post->delete();
+
+             // After successful deletion, close the modal
+            $this->confirmingPostDeletion = null;
+            session()->flash('message', 'Post is verwijderd');
         }
-    
-        // After successful deletion, close the modal
-        $this->confirmingPostDeletion = null;
-        session()->flash('message', 'Post is verwijderd');
     }
 
     public function confirmPostAdd()
@@ -157,11 +168,15 @@ class Posts extends Component
     public function savePost()
     {
         $this->validate();
-
+        
+        // Check if post belongs to auth user
+      
         // Check to see if the item id isset if so edit existing else create one
         if(isset($this->post->id)) {
-            $this->post->save();
-            session()->flash('message', 'Post is aangepast');
+            if(isset($this->post->user_id) && $this->checkOwner($this->post->user_id)) {
+                $this->post->save();
+                session()->flash('message', 'Post is aangepast');
+            }
         } else {
             auth()->user()->posts()->create([
                 "title" => $this->post['title'],
@@ -172,6 +187,7 @@ class Posts extends Component
             ]);
             session()->flash('message', 'Post is opgeslagen');
         }
+        
 
         $this->confirmingPostAdd = false;
     }

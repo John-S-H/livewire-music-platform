@@ -15,7 +15,11 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         {{-- Flowbite --}}
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.css" rel="stylesheet" />
+        {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.css" rel="stylesheet" /> --}}
+
+        {{-- daisyUI --}}
+        {{-- <link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.1/dist/full.css" rel="stylesheet" type="text/css" /> --}}
+
 
         <!-- Styles -->
         @livewireStyles
@@ -44,7 +48,8 @@
         @stack('modals')
 
         {{-- Flowbite --}}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script>
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"></script> --}}
+        {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 
         @livewireScripts
     </body>

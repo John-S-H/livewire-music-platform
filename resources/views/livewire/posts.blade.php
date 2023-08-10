@@ -1,18 +1,26 @@
 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
 
     @if(session()->has('message'))
-        <div class="flex items-center bg-blue-500 text-white text-sm font-bold px-4 py-3 relative" role="alert" x-data="{show: true}" x-show="show">
-            <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.432 0c1.34 0 2.01.912 2.01 1.957 0 1.305-1.164 2.512-2.679 2.512-1.269 0-2.009-.75-1.974-1.99C9.789 1.436 10.67 0 12.432 0zM8.309 20c-1.058 0-1.833-.652-1.093-3.524l1.214-5.092c.211-.814.246-1.141 0-1.141-.317 0-1.689.562-2.502 1.117l-.528-.88c2.572-2.186 5.531-3.467 6.801-3.467 1.057 0 1.233 1.273.705 3.23l-1.391 5.352c-.246.945-.141 1.271.106 1.271.317 0 1.357-.392 2.379-1.207l.6.814C12.098 19.02 9.365 20 8.309 20z"/></svg>
-            <p>{{ session('message') }}</p>
-            <span class="absolute top-0 bottom-0 right-0 px-4 py-3" @click="show = false">
-                <svg class="fill-current h-6 w-6 text-white-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-            </span>
+        <div id="alert-3" class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert" x-data="{show: true}" x-show="show">
+            <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="sr-only">Info</span>
+            <div class="ml-3 text-sm font-medium">
+                {{ session('message') }}
+            </div>
+            <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close" @click="show = false">
+                <span class="sr-only">Close</span>
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+            </button>
         </div>
     @endif
 
     <div class="mt-8 text-2xl flex justify-between">
         <div>Posts</div>
-        <div class="mr-2">
+        <div class="mr-2">a
             <button wire:click="confirmPostAdd" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                 {{ __('Nieuwe post') }}
             </button>
@@ -26,16 +34,16 @@
         
         <div class="flex justify-between mb-4">
             <div>
-                <input wire:model.debounce.500ms="q" type="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 mr-4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Zoek..">
+                <input wire:model.debounce.500ms="q" type="search" class="input input-bordered max-w-xs mr-4" placeholder="Zoek..">
 
-                <select id="provinces" wire:model="selectedProvince" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mr-4 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select id="provinces" wire:model="selectedProvince" class="select select-bordered max-w-xs mr-4">
                     <option value="">Selecteer provincie</option>
                     @foreach ($provinces as $province)
                         <option value="{{ $province }}">{{ $province }}</option>
                     @endforeach
                 </select>
             
-                <select wire:model="selectedType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select wire:model="selectedType" class="select select-bordered max-w-xs">
                     <option value="">Selecteer type muziekant</option>
                     @foreach ($types as $type)
                         <option value="{{ strtolower($type) }}">{{ $type }}</option>
@@ -55,6 +63,11 @@
                             <button wire:click="sortBy('id')">Id</button>
                             <x-sort-icon sortField="id" :sortBy="$sortBy" :sortAsc="$sortAsc" />
                         </div>
+                        <th class="px-4 py-2">
+                        <div class="flex items-center">
+                            <p>Gebruiker</p>
+                        </div>
+                        </th>
                         <th class="px-4 py-2">
                             <div class="flex items-center">
                                 <button wire:click="sortBy('title')">Title</button>
@@ -98,6 +111,11 @@
                             {{ $post->id }}
                         </td>
                         <td class="border px-4 py-2">
+                            <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                                <img class="mr-4 w-12 h-12 rounded-full" src="{{ $post->user->profile_photo_url }}" alt="{{ $post->user->name }}">
+                            </div>
+                        </td>
+                        <td class="border px-4 py-2">
                             {{ $post->title }}
                         </td>
                         <td class="border px-4 py-2">
@@ -111,16 +129,19 @@
                         <td class="border px-4 py-2">
                             {{ $post->type }}
                         </td>
-                        <td class="border px-4 py-2">
-                            <button wire:click="confirmPostEdit({{ $post->id }})" class="text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900">
-                                {{ __('Aanpassen') }}
-                            </button>
+                        <td class="border px-4 py-2 my-2">
+                            @if($this->checkOwner($post->user_id))
 
-                            <button  wire:click="confirmPostDeletion({{ $post->id }})" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" wire:loading.attr="disabled">
-                                {{ __('Verwijder') }}
-                            </button>
+                                <a href="#" wire:click.prevent="confirmPostEdit({{ $post->id }})" class="link-warning link-hover">
+                                    {{ __('Aanpassen') }}
+                                </a>
 
-                            <a href="{{ route('view.post', ['id' => $post->id]) }}" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                                <a href="#"  wire:click="confirmPostDeletion({{ $post->id }})" class="link-error link-hover">
+                                    {{ __('Verwijderen') }}
+                                </a>
+                            @endif
+                    
+                            <a href="{{ route('view.post', ['id' => $post->id]) }}" class="link-info link-hover">
                                 {{ __('Bekijken') }}
                             </a>
                         </td>
@@ -134,6 +155,9 @@
         {{ $posts->links() }}
     </div>
 
+
+
+    
     <x-confirmation-modal wire:model="confirmingPostDeletion">
         <x-slot name="title">
             {{ __('Verwijder bericht') }}
@@ -159,24 +183,25 @@
         <x-slot name="title">
             {{ isset($this->post->id) ? 'Post aanpassen' : 'Post toevoegen'}}
         </x-slot>
+        
     
         <x-slot name="content">
             <div class="col-span-6 sm:col-span-4 mb-4">
                 <x-label for="title" value="{{ __('Title') }}" />
-                <x-input id="title" type="text"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full" wire:model.defer="post.title" required autocomplete="title" />
+                <x-input id="title" type="text"  class="input input-bordered max-w-xs w-full " wire:model.defer="post.title" required autocomplete="title" />
                 <x-input-error for="post.title" class="mt-2" />
             </div>
     
             <div class="col-span-6 sm:col-span-4 mb-4">
-                <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('Omschrijving') }}</label>
-                <textarea id="message" wire:model.defer="post.description" required autocomplete="description" id="description"  rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Vul de omschrijving in..."></textarea>
+                <label for="message" class="block mb-2 text-sm font-medium text-gray-900">{{ __('Omschrijving') }}</label>
+                <textarea id="message" wire:model.defer="post.description" required autocomplete="description" id="description"  rows="4" class="textarea textarea-bordered w-full" placeholder="Vul de omschrijving in..."></textarea>
                 <x-input-error for="post.description" class="mt-2" />
             </div>
 
             <div class="grid gap-6 mb-6 md:grid-cols-2">
-                <div class="">
+                <div>
                     <x-label for="province" value="{{ __('Province') }}" />
-                    <select id="province" wire:model.defer="post.province" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mr-4 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select id="province" wire:model.defer="post.province" class="select select-bordered w-full max-w-xs">
                         <option value="">Selecteer provincie</option>
                         @foreach ($provinces as $province)
                             <option value="{{ $province }}">{{ $province }}</option>
@@ -185,9 +210,9 @@
                     </select>
                 </div>
         
-                <div class="">
+                <div>
                     <x-label for="type" value="{{ __('Type') }}" />
-                    <select id="type" wire:model.defer="post.type" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mr-4 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select id="type" wire:model.defer="post.type" class="select select-bordered w-full max-w-xs">
                         <option value="" selected disabled>Select Type</option>
                         @foreach ($types as $type)
                         <option value="{{ $type }}">{{ $type }}</option>
