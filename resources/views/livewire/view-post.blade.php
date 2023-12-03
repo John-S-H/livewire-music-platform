@@ -33,8 +33,10 @@
                         <header class="my-4">
                             <address class="flex items-center not-italic">
                                 <div class="inline-flex items-center mr-3 text-sm text-gray-900">
-                                    <img class="mr-4 w-16 h-16 rounded-full" src="{{ $author->profile_photo_url }}"
-                                         alt="{{ Auth::user()->name }}">
+                                    @if(isset($author->profile_photo_url))
+                                        <img class="mr-4 w-16 h-16 rounded-full" src="{{ $author->profile_photo_url }}"
+                                             alt="{{ Auth::user()->name }}">
+                                    @endif
                                     <div>
                                         <a href="#" rel="author"
                                            class="text-xl font-bold text-gray-900">{{ $author->name }}</a>
@@ -142,8 +144,6 @@
                     </x-slot>
 
                     <x-slot name="footer">
-
-
                         <x-secondary-button wire:click="$set('confirmingPostAdd', false)" wire:loading.attr="disabled">
                             {{ __('Annuleren') }}
                         </x-secondary-button>
@@ -152,5 +152,9 @@
                             {{ __('Opslaan') }}
                         </button>
                     </x-slot>
+
                 </x-dialog-modal>
             </div>
+        </div>
+    </div>
+</div>

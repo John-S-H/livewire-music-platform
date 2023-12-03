@@ -14,7 +14,7 @@ class UserProfile extends Component
     {
         $this->userId = $id;
         $this->userProfile = User::findOrFail($id);
-    } 
+    }
 
     public function render()
     {

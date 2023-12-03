@@ -97,13 +97,16 @@
                         <td class="border px-4 py-2">
                             {{ $post->id }}
                         </td>
-                        <td class="border px-4 py-2">
-                            <div class="avatar">
-                                <div class="w-12 mask mask-squircle">
-                                    <img src="{{ $post->user->profile_photo_url }}"/>
+                        @if(isset($post->user->profile_photo_url))
+                            <td class="border px-4 py-2">
+                                <div class="avatar">
+                                    <div class="w-12 mask mask-squircle">
+                                        <img src="{{ $post->user->profile_photo_url }}"/>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
+                            </td>
+                        @endif
+
                         <td class="border px-4 py-2">
                             {{ $post->title }}
                         </td>

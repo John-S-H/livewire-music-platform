@@ -1,10 +1,12 @@
 <div class="p-6 sm:px-20 bg-gray border-b border-gray-200">
     <!-- Card start -->
+
+    <img src="{{ $user->profile_photo_path }}" />
     <div>
         <div class="max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
             <div class="border-b px-4 pb-6">
                 <div class="text-center my-4">
-                    <img class="h-32 w-32 rounded-full border-4 border-white mx-auto my-4" src="{{ $user->profile_photo_url }}" alt="{{$user->name }}">
+                    <img class="h-32 w-32 rounded-full border-4 border-white mx-auto my-4" src="{{ $user->profile_photo_path }}" alt="{{$user->name }}">
                     <div class="py-2">
                         <h3 class="font-bold text-2xl mb-1">{{ $user->name }}</h3>
                         <div class="inline-flex text-gray-700 items-center">

@@ -15,13 +15,13 @@ class ViewPost extends Posts
     public function mount($id)
     {
         $this->postId = $id;
-        
+
         // get the post with the author so we dont need to preform extra queries
         $this->post = Post::with('user')->findOrFail($id);
 
         // Assign the author to the $author variable
-        $this->author = $this->post->user; 
-    } 
+        $this->author = $this->post->user;
+    }
 
     public function render()
     {
