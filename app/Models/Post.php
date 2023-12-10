@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Post extends Model
@@ -21,5 +20,5 @@ class Post extends Model
     public function scopeActive($query) {
         return $query->where('status', 1);
     }
-    
+
 }

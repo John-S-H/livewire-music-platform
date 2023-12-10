@@ -17,7 +17,7 @@ class Posts extends Component
     public $sortAsc = false;
     public $post;
     public $selectedProvince;
-    public $selectedType; 
+    public $selectedType;
     public $confirmingPostDeletion = false;
     public $confirmingPostAdd = false;
 
@@ -92,30 +92,30 @@ class Posts extends Component
         ]);
     }
 
-    public function updatingActive()
+    public function updatingActive(): void
     {
         $this->resetPage();
     }
 
-       // If we are on another page and type in title go back to first page
-    public function updatingQ()
+    // If we are on another page and type in title go back to first page
+    public function updatingQ(): void
     {
         $this->resetPage();
     }
-    
+
        // If we are on another page and select another type show the results
-    public function updatingSelectedType()
+    public function updatingSelectedType(): void
     {
         $this->resetPage();
     }
-    
+
    // If we are on another page and select another province show the results
-    public function updatingSelectedProvince()
+    public function updatingSelectedProvince(): void
     {
         $this->resetPage();
     }
-    
-    public function sortBy($field) 
+
+    public function sortBy($field): void
     {
 
         if($field === $this->sortBy) {
@@ -125,7 +125,7 @@ class Posts extends Component
         $this->sortBy = $field;
     }
 
-    public function checkOwner($postUserId)
+    public function checkOwner($postUserId): bool
     {
         if($postUserId === Auth::user()->id)
         {
@@ -134,13 +134,13 @@ class Posts extends Component
 
         return false;
     }
-    
-    public function confirmPostDeletion($postId)
+
+    public function confirmPostDeletion($postId): void
     {
         $this->confirmingPostDeletion = $postId;
     }
-    
-    public function deletePost()
+
+    public function deletePost(): void
     {
         $post = Post::find($this->confirmingPostDeletion);
 
@@ -153,24 +153,24 @@ class Posts extends Component
         }
     }
 
-    public function confirmPostAdd()
+    public function confirmPostAdd(): void
     {
         $this->reset();
         $this->confirmingPostAdd = true;
     }
 
-    public function confirmPostEdit(Post $post)
+    public function confirmPostEdit(Post $post): void
     {
         $this->post = $post;
         $this->confirmingPostAdd = true;
     }
-    
-    public function savePost()
+
+    public function savePost(): void
     {
         $this->validate();
-        
+
         // Check if post belongs to auth user
-      
+
         // Check to see if the item id isset if so edit existing else create one
         if(isset($this->post->id)) {
             if(isset($this->post->user_id) && $this->checkOwner($this->post->user_id)) {
@@ -187,7 +187,7 @@ class Posts extends Component
             ]);
             session()->flash('message', 'Post is opgeslagen');
         }
-        
+
 
         $this->confirmingPostAdd = false;
     }

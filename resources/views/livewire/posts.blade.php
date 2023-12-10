@@ -11,9 +11,6 @@
         </div>
     </div>
 
-    {{-- User for checking the query --}}
-    {{-- {{ $sqlQuery }} --}}
-
     <div class="mt-6">
 
         <div class="flex justify-between mb-4">
@@ -170,7 +167,6 @@
             </x-danger-button>
         </x-slot>
     </x-confirmation-modal>
-
 
     <x-dialog-modal wire:model="confirmingPostAdd">
         <x-slot name="title">

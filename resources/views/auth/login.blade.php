@@ -1,9 +1,4 @@
 <x-guest-layout>
-
-
-
-
-
     <div class="w-full flex flex-wrap">
 
         <!-- Login Section -->
