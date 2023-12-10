@@ -17,8 +17,19 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function scopeActive($query) {
+    public function scopeActive($query)
+    {
         return $query->where('status', 1);
+    }
+
+    public function province(): BelongsTo
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function musicianType(): BelongsTo
+    {
+        return $this->belongsTo(MusicianType::class);
     }
 
 }

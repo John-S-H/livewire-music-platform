@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\MusicianType;
+use App\Models\Province;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Models\Post;
@@ -36,23 +38,11 @@ class Posts extends Component
         'post.status' => 'boolean'
     ];
 
-    public $provinces = [
-        'Groningen', 'Friesland', 'Drenthe', 'Overijssel', 'Gelderland',
-        'Flevoland', 'Utrecht', 'Noord-Holland', 'Zuid-Holland',
-        'Zeeland', 'Noord-Brabant', 'Limburg'
-    ];
-
-    public $types = [
-        'Bassist', 'Blokfluitist', 'Cellist', 'Componist', 'Rapper',
-        'Drummer', 'Fluitist', 'Gitarist', 'Harpist', 'Hoboïst',
-        'Hoornist', 'Klavecinist', 'Klarinettist', 'Organist',
-        'Percussionist', 'Pianist', 'Saxofonist', 'Toetsenist',
-        'Trombonist', 'Trompettist', 'Tubaïst', 'Violist', 'Zanger',
-    ];
-
     public function render()
     {
-        $query = Post::query();
+        $query = Post::query()->with('province');
+        $provinces = Province::all();
+        $musicTypes = MusicianType::all();
 
         // Apply filter if $active is set, the scopeActive is used for this check in the Post model
         if ($this->active) {
@@ -68,11 +58,15 @@ class Posts extends Component
         }
 
         if ($this->selectedProvince) {
-            $query->where('province', $this->selectedProvince);
+            $query->whereHas('province', function ($query) {
+                $query->where('title', $this->selectedProvince);
+            });
         }
 
         if ($this->selectedType) {
-            $query->where('type', $this->selectedType);
+            $query->whereHas('musicianType', function ($query) {
+                $query->where('name', $this->selectedType);
+            });
         }
 
         // Use orderBy() to sort the results if needed
@@ -87,8 +81,8 @@ class Posts extends Component
         return view('livewire.posts', [
             'posts' => $posts,
             'sqlQuery' => $sqlQuery,
-            'provinces' => $this->provinces,
-            'types' => $this->types
+            'provinces' => $provinces,
+            'types' => $musicTypes
         ]);
     }
 

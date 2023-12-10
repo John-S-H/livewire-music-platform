@@ -64,7 +64,6 @@ Route::middleware([
     Route::get('/musician-types', \App\Http\Livewire\MusicianTypes::class)->name('musician-types');
 });
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

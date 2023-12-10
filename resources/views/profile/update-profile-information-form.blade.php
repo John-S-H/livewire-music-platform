@@ -1,3 +1,7 @@
+@php
+    $musicianTypes = \App\Models\MusicianType::all();
+@endphp
+
 <x-form-section submit="updateProfileInformation">
     <x-slot name="title">
         {{ __('Profile Information') }}
@@ -24,7 +28,7 @@
                                     reader.readAsDataURL($refs.photo.files[0]);
                             " />
 
-                <x-label for="photo" value="{{ __('Photo') }}" />
+                <x-label for="photo" value="{{ __('Foto') }}" />
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
@@ -54,7 +58,7 @@
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="name" value="{{ __('Name') }}" />
+            <x-label for="name" value="{{ __('Naam') }}" />
             <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" required autocomplete="name" />
             <x-input-error for="name" class="mt-2" />
         </div>
@@ -81,6 +85,29 @@
                 @endif
             @endif
         </div>
+
+        <!-- Musician type -->
+        <div class="col-span-6 sm:col-span-4">
+            <label for="musician_type_id">Muzikant type</label>
+            <select id="musician_type_id" class="mt-1 block w-full" wire:model.defer="state.musician_type_id" >
+                <option value="">Selecteer type</option>
+                @foreach($musicianTypes as $musicianType)
+                    <option value="{{ $musicianType->id }}">{{ $musicianType->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <label for="province">Provincie</label>
+            <select id="province" class="mt-1 block w-full" wire:model.defer="state.province">
+                <option value="">Selecteer provincie</option>
+                <option value="Groningen">Groningen</option>
+                <option value="Friesland">Friesland</option>
+                <option value="Drenthe">Drenthe</option>
+                <option value="Limburg">Limburg</option>
+            </select>
+        </div>
+
     </x-slot>
 
     <x-slot name="actions">

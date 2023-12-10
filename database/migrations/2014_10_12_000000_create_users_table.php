@@ -20,6 +20,13 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+
+            $table->foreignId('musician_type_id')->nullable();
+            $table->foreign('musician_type_id')->references('id')->on('musician_types');
+
+            $table->foreignId('province_id')->nullable();
+            $table->foreign('province_id')->references('id')->on('provinces');
+
             $table->timestamps();
         });
     }

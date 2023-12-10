@@ -14,26 +14,12 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $provinces = [
-            'Groningen', 'Friesland', 'Drenthe', 'Overijssel', 'Gelderland',
-            'Flevoland', 'Utrecht', 'Noord-Holland', 'Zuid-Holland',
-            'Zeeland', 'Noord-Brabant', 'Limburg'
-        ];
-
-        $types = [
-            'Bassist', 'Blokfluitist', 'Cellist', 'Componist', 'Rapper',
-            'Drummer', 'Fluitist', 'Gitarist', 'Harpist', 'Hoboïst',
-            'Hoornist', 'Klavecinist', 'Klarinettist', 'Organist',
-            'Percussionist', 'Pianist', 'Saxofonist', 'Toetsenist',
-            'Trombonist', 'Trompettist', 'Tubaïst', 'Violist', 'Zanger',
-        ];
-
         return [
             'user_id' => User::factory(),
             'title' => $this->faker->title(),
-            'type' => $this->faker->randomElement($types),
             'description' => $this->faker->paragraph(),
-            'province' => $this->faker->randomElement($provinces),
+            'province_id' => random_int(1, 10),
+            'musician_type_id' => random_int(1, 23),
             'status' => $this->faker->boolean(),
         ];
     }

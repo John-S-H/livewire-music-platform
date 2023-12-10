@@ -32,14 +32,14 @@
         <x-slot name="title">
             {{ isset($this->post->id) ? 'Post aanpassen' : 'Post toevoegen'}}
         </x-slot>
-    
+
         <x-slot name="content">
             <div class="col-span-6 sm:col-span-4 mb-4">
                 <x-label for="title" value="{{ __('Title') }}" />
                 <x-input id="title" type="text"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full" wire:model.defer="post.title" required autocomplete="title" />
                 <x-input-error for="post.title" class="mt-2" />
             </div>
-    
+
             <div class="col-span-6 sm:col-span-4 mb-4">
                 <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('Omschrijving') }}</label>
                 <textarea id="message" wire:model.defer="post.description" required autocomplete="description" id="description"  rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Vul de omschrijving in..."></textarea>
@@ -48,7 +48,7 @@
 
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
-                    <x-label for="province" value="{{ __('Province') }}" />
+                    <x-label for="province" value="{{ __('ProvinceSeeder') }}" />
                     <select id="province" wire:model.defer="post.province" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mr-4 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="">Selecteer provincie</option>
                         @foreach ($provinces as $province)
@@ -57,7 +57,7 @@
                         <x-input-error for="post.province" class="mt-2" />
                     </select>
                 </div>
-        
+
                 <div>
                     <x-label for="type" value="{{ __('Type') }}" />
                     <select id="type" wire:model.defer="post.type" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 mr-4 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -77,12 +77,12 @@
                 </label>
             </div>
         </x-slot>
-    
+
         <x-slot name="footer">
             <x-secondary-button wire:click="$set('confirmingPostAdd', false)" wire:loading.attr="disabled">
                 {{ __('Annuleren') }}
             </x-secondary-button>
-    
+
             <x-danger-button class="ml-3" wire:click="savePost()" wire:loading.attr="disabled">
                 {{ __('Opslaan') }}
             </x-danger-button>

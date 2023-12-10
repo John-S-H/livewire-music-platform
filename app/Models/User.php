@@ -29,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'musician_type_id'
     ];
 
     /**
@@ -71,6 +72,6 @@ class User extends Authenticatable
 
     public function musicianType(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(MusicianType::class);
     }
 }

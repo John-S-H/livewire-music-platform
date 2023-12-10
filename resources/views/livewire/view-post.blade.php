@@ -111,7 +111,7 @@
 
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
-                                <x-label for="province" value="{{ __('Province') }}"/>
+                                <x-label for="province" value="{{ __('ProvinceSeeder') }}"/>
                                 <select id="province" wire:model.defer="post.province"
                                         class="select select-bordered w-full max-w-x w-full">
                                     <option value="">Selecteer provincie</option>

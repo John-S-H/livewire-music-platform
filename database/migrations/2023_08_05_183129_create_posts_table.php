@@ -16,10 +16,16 @@ return new class extends Migration
             $table->integer('user_id')->index();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('province')->nullable();
             $table->string('type')->nullable();
             $table->boolean('status');
-            $table->timestamps(); 
+
+            $table->foreignId('musician_type_id')->nullable();
+            $table->foreign('musician_type_id')->references('id')->on('musician_types');
+
+            $table->foreignId('province_id')->nullable();
+            $table->foreign('province_id')->references('id')->on('provinces');
+
+            $table->timestamps();
         });
     }
 

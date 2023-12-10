@@ -21,14 +21,14 @@
                 <select id="provinces" wire:model="selectedProvince" class="select select-bordered max-w-xs mr-4">
                     <option value="">Selecteer provincie</option>
                     @foreach ($provinces as $province)
-                        <option value="{{ $province }}">{{ $province }}</option>
+                        <option value="{{ $province->title }}">{{ $province->title }}</option>
                     @endforeach
                 </select>
 
                 <select wire:model="selectedType" class="select select-bordered max-w-xs">
                     <option value="">Selecteer type muziekant</option>
                     @foreach ($types as $type)
-                        <option value="{{ strtolower($type) }}">{{ $type }}</option>
+                        <option value="{{ strtolower($type->name) }}">{{ $type->name }}</option>
                     @endforeach
                 </select>
 
@@ -108,7 +108,7 @@
                             {{ $post->title }}
                         </td>
                         <td class="border px-4 py-2">
-                            {{ $post->province }}
+                            {{ $post->province->title }}
                         </td>
                         @if(!$active)
                             <td class="border px-4 py-2">
@@ -116,7 +116,7 @@
                             </td>
                         @endif
                         <td class="border px-4 py-2">
-                            {{ $post->type }}
+                            {{ $post->musicianType->name }}
                         </td>
                         <td class="border px-4 py-2 my-2">
                             @if($this->checkOwner($post->user_id))
@@ -193,7 +193,7 @@
 
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
-                    <x-label for="province" value="{{ __('Province') }}"/>
+                    <x-label for="province" value="{{ __('ProvinceSeeder') }}"/>
                     <select id="province" wire:model.defer="post.province"
                             class="select select-bordered w-full max-w-xs">
                         <option value="">Selecteer provincie</option>
