@@ -173,10 +173,9 @@
             {{ isset($this->post->id) ? 'Post aanpassen' : 'Post toevoegen'}}
         </x-slot>
 
-
         <x-slot name="content">
             <div class="col-span-6 sm:col-span-4 mb-4">
-                <x-label for="title" value="{{ __('Title') }}"/>
+                <x-label for="title" value="{{ __('Titel') }}"/>
                 <x-input id="title" type="text" class="input input-bordered w-full "
                          wire:model.defer="post.title" required autocomplete="title"/>
                 <x-input-error for="post.title" class="mt-2"/>
@@ -193,26 +192,26 @@
 
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
-                    <x-label for="province" value="{{ __('ProvinceSeeder') }}"/>
-                    <select id="province" wire:model.defer="post.province"
+                    <x-label for="province_id" value="{{ __('Provincie') }}"/>
+                    <select id="province_id" wire:model.defer="post.province_id"
                             class="select select-bordered w-full max-w-xs">
                         <option value="">Selecteer provincie</option>
                         @foreach ($provinces as $province)
-                            <option value="{{ $province }}">{{ $province }}</option>
+                            <option value="{{ $province->id }}">{{ $province->title }}</option>
                         @endforeach
-                        <x-input-error for="post.province" class="mt-2"/>
+                        <x-input-error for="post.province_id" class="mt-2"/>
                     </select>
                 </div>
 
                 <div>
-                    <x-label for="type" value="{{ __('Type') }}"/>
-                    <select id="type" wire:model.defer="post.type" class="select select-bordered w-full max-w-xs">
-                        <option value="" selected disabled>Select Type</option>
+                    <x-label for="musician_type_id" value="{{ __('Muziekant type') }}"/>
+                    <select id="musician_type_id" wire:model.defer="post.musician_type_id" class="select select-bordered w-full max-w-xs">
+                        <option value="" selected disabled>Select Muziek type</option>
                         @foreach ($types as $type)
-                            <option value="{{ $type }}">{{ $type }}</option>
+                            <option value="{{ $type->id }}">{{ $type->name }}</option>
                         @endforeach
                     </select>
-                    <x-input-error for="post.type" class="mt-2"/>
+                    <x-input-error for="post.musician_type_id" class="mt-2"/>
                 </div>
             </div>
 

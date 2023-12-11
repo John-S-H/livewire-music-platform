@@ -33,14 +33,14 @@ class Posts extends Component
     protected $rules = [
         'post.title' => 'required|string|min:4',
         'post.description' => 'required|string|min:4',
-        'post.type' => 'required|string|min:4',
-        'post.province' => 'required|string|min:4',
+        'post.musician_type_id' => 'exists:musician_types,id',
+        'post.province_id' => 'exists:provinces,id',
         'post.status' => 'boolean'
     ];
 
     public function render()
     {
-        $query = Post::query()->with('province');
+        $query = Post::query()->with('province', 'musicianType');
         $provinces = Province::all();
         $musicTypes = MusicianType::all();
 
@@ -164,24 +164,31 @@ class Posts extends Component
         $this->validate();
 
         // Check if post belongs to auth user
-
         // Check to see if the item id isset if so edit existing else create one
         if(isset($this->post->id)) {
             if(isset($this->post->user_id) && $this->checkOwner($this->post->user_id)) {
-                $this->post->save();
-                session()->flash('message', 'Post is aangepast');
+                $post = Post::find($this->post->id); // Retrieve the existing post
+                if($post) {
+                    $post->update([
+                        "title" => $this->post['title'],
+                        "description" => $this->post['description'],
+                        "musician_type_id" => $this->post['musician_type_id'],
+                        "province_id" => $this->post['province_id'],
+                        "status" => $this->post['status'] ?? 0,
+                    ]);
+                    session()->flash('message', 'Post is aangepast');
+                }
             }
         } else {
             auth()->user()->posts()->create([
                 "title" => $this->post['title'],
                 "description" => $this->post['description'],
-                "type" => $this->post['type'],
-                "province" => $this->post['province'],
+                "musician_type_id" => $this->post['musician_type_id'],
+                "province_id" => $this->post['province_id'],
                 "status" => $this->post['status'] ?? 0,
             ]);
             session()->flash('message', 'Post is opgeslagen');
         }
-
 
         $this->confirmingPostAdd = false;
     }
