@@ -22,6 +22,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
             'musician_type_id' => ['nullable', 'exists:musician_types,id'],
+            'province_id' => ['nullable', 'exists:provinces,id'],
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -30,6 +31,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 
         if (isset($input['musician_type_id'])) {
             $user->musician_type_id = $input['musician_type_id'];
+            $user->save();
+        }
+
+        if (isset($input['province_id'])) {
+            $user->province_id = $input['province_id'];
             $user->save();
         }
 

@@ -29,7 +29,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'musician_type_id'
+        'musician_type_id',
+        'province_id',
     ];
 
     /**

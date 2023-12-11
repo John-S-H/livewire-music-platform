@@ -1,5 +1,6 @@
 @php
     $musicianTypes = \App\Models\MusicianType::all();
+    $provinces = App\Models\Province::all();
 @endphp
 
 <x-form-section submit="updateProfileInformation">
@@ -98,13 +99,12 @@
         </div>
 
         <div class="col-span-6 sm:col-span-4">
-            <label for="province">Provincie</label>
-            <select id="province" class="mt-1 block w-full" wire:model.defer="state.province">
+            <label for="province_id">Provincie</label>
+            <select id="province_id" class="mt-1 block w-full" wire:model.defer="state.province_id">
                 <option value="">Selecteer provincie</option>
-                <option value="Groningen">Groningen</option>
-                <option value="Friesland">Friesland</option>
-                <option value="Drenthe">Drenthe</option>
-                <option value="Limburg">Limburg</option>
+                @foreach($provinces as $province)
+                    <option value="{{ $province->id }}">{{ $province->title }}</option>
+                @endforeach
             </select>
         </div>
 
