@@ -75,4 +75,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(MusicianType::class);
     }
+
+    public function province(): BelongsTo
+    {
+        return $this->belongsTo(Province::class);
+    }
 }
